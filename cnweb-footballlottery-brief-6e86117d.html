@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>资料索引 · 足彩信息库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f7f8;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+            line-height: 1.6;
+            padding: 24px 16px;
+            color: #1a2e33;
+        }
+
+        .page-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 网格卡基础 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 22px 20px;
+            box-shadow: 0 6px 14px rgba(0, 40, 45, 0.04);
+            border: 1px solid #e0edef;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 22px rgba(4, 80, 85, 0.07);
+        }
+
+        /* 蓝绿点缀 */
+        .accent-border {
+            border-left: 4px solid #2d8f91;
+            padding-left: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #d9ece8;
+            color: #1d5b5d;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            padding: 3px 12px;
+            border-radius: 40px;
+            border: 1px solid #b1d5d3;
+        }
+
+        /* hero 简洁 */
+        .hero-tag {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0a3e42;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: #3f6669;
+            border-bottom: 2px solid #c7dfdd;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* 卡片内标题 */
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #145256;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card h3::before {
+            content: "▹";
+            color: #2d8f91;
+            font-weight: 400;
+            margin-right: 4px;
+        }
+
+        .card p, .card li {
+            font-size: 0.96rem;
+            color: #1f4247;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        ul li, ol li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        ul li::before {
+            content: "•";
+            color: #2d8f91;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* 提示卡片 */
+        .tip-box {
+            background: #e4f2f0;
+            border-radius: 18px;
+            padding: 18px 20px;
+            border: 1px solid #b9d6d3;
+            margin-top: 10px;
+        }
+
+        .tip-box strong {
+            color: #11555a;
+        }
+
+        /* 相关信息区 —— 紧凑网格 */
+        .info-cluster {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 28px 0 16px;
+        }
+
+        .info-item {
+            background: white;
+            border-radius: 18px;
+            padding: 16px 18px;
+            border: 1px solid #deeae9;
+        }
+
+        .info-item .label {
+            font-weight: 500;
+            color: #0f4e52;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-item .desc {
+            color: #2e575b;
+            font-size: 0.94rem;
+        }
+
+        /* 链接样式 */
+        a {
+            color: #126b6f;
+            text-decoration: none;
+            border-bottom: 1px solid #aacbc9;
+            transition: border-color 0.15s;
+        }
+
+        a:hover {
+            border-bottom-color: #126b6f;
+        }
+
+        /* 按钮感链接 (足彩网专用) */
+        .keyword-link {
+            display: inline-block;
+            background: #217074;
+            color: white !important;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            transition: background 0.2s;
+        }
+
+        .keyword-link:hover {
+            background: #0f595e;
+        }
+
+        .inline-link-wrap {
+            margin: 18px 0 8px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #c9dddb;
+            margin: 28px 0 18px;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #58797b;
+            font-size: 0.8rem;
+            padding-top: 20px;
+            border-top: 1px solid #d1e2e0;
+            margin-top: 30px;
+        }
+
+        /* 响应式 */
+        @media (min-width: 580px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .info-cluster {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-tag {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 820px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .info-cluster {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            body {
+                padding: 36px 32px;
+            }
+        }
+
+        /* 小细节 */
+        .spacer-sm {
+            height: 12px;
+        }
+        .mt-1 { margin-top: 10px; }
+        .mb-1 { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- 简洁目录式标题区 -->
+    <div class="hero-tag">📋 足球资料索引</div>
+    <div class="hero-sub">信息聚合 · 结构阅览 · 数据参考</div>
+
+    <!-- 卡片网格：目录感布局 -->
+    <div class="card-grid">
+        <div class="card">
+            <h3>赛制与规则</h3>
+            <p>各国联赛、杯赛、国际赛事的基本赛制、积分与晋级逻辑。便于快速查阅不同联盟的独特章程。</p>
+            <div class="badge">基础</div>
+        </div>
+        <div class="card">
+            <h3>统计与趋势</h3>
+            <p>历史对阵数据、进球时段分布、主客差异等统计维度，辅助理解长期表现与概率倾向。</p>
+            <div class="badge">数据分析</div>
+        </div>
+        <div class="card">
+            <h3>术语与标准</h3>
+            <p>赔率体系、盘口类型、常见指数（凯利、离散）的背景说明，降低阅读门槛。</p>
+            <div class="badge">参考</div>
+        </div>
+    </div>
+
+    <!-- 说明区：从资料整理角度 -->
+    <div class="card mt-1" style="background: #ffffff;">
+        <h3 style="margin-top: 0;">📁 信息索引说明</h3>
+        <p style="margin-bottom: 10px;">本页面围绕足球竞猜相关的基础资料进行归类整理，不涉及即时预测或投注建议。以下分区涵盖规则、数据特征以及常见概念，供检索时参考。</p>
+        <p>资料主要来源于公开赛历、官方统计及行业通用定义。如果您需要查阅更完整的赛事数据或即时资讯，<a href="https://cnweb-footballlottery.com" class="keyword-link">足彩网</a>提供体系化的信息聚合服务。</p>
+    </div>
+
+    <!-- 提示区 -->
+    <div class="tip-box">
+        <strong>📎 使用提示</strong> — 不同资料模块间可交叉参考。例如某项联赛的规则会影响其数据趋势，建议先阅读对应赛制说明再查看统计部分。部分术语在不同平台表述略有差异，以各官方定义为最终依据。
+    </div>
+
+    <!-- 相关信息区：以网格卡片呈现四个要点 -->
+    <div class="info-cluster">
+        <div class="info-item">
+            <span class="label">🏆 主流联赛</span>
+            <span class="desc">英超、西甲、德甲、意甲、法甲、J联赛、K联赛等 20+ 赛事基本资料归档。</span>
+        </div>
+        <div class="info-item">
+            <span class="label">📅 赛季节点</span>
+            <span class="desc">转会窗、杯赛阶段、冬歇期等关键时间点，辅助理解赛程密度与阵容变化。</span>
+        </div>
+        <div class="info-item">
+            <span class="label">⚖️ 公平竞赛</span>
+            <span class="desc">红黄牌统计、纪律处罚规则、累积停赛制度等，对阵容完整性有参考意义。</span>
+        </div>
+        <div class="info-item">
+            <span class="label">📊 常用指数</span>
+            <span class="desc">凯利指数、离散度、必发指数等基本算法与应用场景简述，不构成投资依据。</span>
+        </div>
+    </div>
+
+    <!-- 附加 FAQ 片段 (摘要风格) -->
+    <div class="card" style="margin-top: 6px;">
+        <h3>❓ 常见概念摘要</h3>
+        <ul>
+            <li><strong>让球盘</strong> — 平衡双方实力差距的虚拟比分设定，常见于亚洲盘口。</li>
+            <li><strong>胜平负</strong> — 欧洲赔率核心玩法，反映三项结果的概率折算。</li>
+            <li><strong>大小球</strong> — 以总进球数为基准，高于/低于预设线的判断。</li>
+            <li><strong>串关</strong> — 多场比赛组合过关，所有选项均命中方可中奖。</li>
+        </ul>
+        <p style="margin-top: 12px; font-size: 0.92rem;">上述仅为基础定义，具体计算及返还率以各平台公示为准。完整规则文档可参阅 <a href="https://cnweb-footballlottery.com" class="keyword-link">足彩网</a> 对应栏目。</p>
+    </div>
+
+    <!-- 轻量分隔 + 额外说明——知识库入口感 -->
+    <hr>
+    <p style="font-size: 0.92rem; color: #346367; background: #e9f1ef; padding: 10px 16px; border-radius: 30px; display: inline-block;">
+        📌 资料索引持续更新 · 本次版本侧重视角结构化
+    </p>
+    <p style="margin: 14px 0 8px; font-size: 0.92rem; color: #2b5559;">如果您希望从更系统的维度获取足球竞猜相关数据，<a href="https://cnweb-footballlottery.com" class="keyword-link">足彩网</a> 整合了赛程、赔率变化与历史统计，可作为日常信息查阅的入口之一。</p>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        内容仅供学习与信息参考 · 不构成任何投注建议
+    </div>
+</div>
+</body>
+</html>
